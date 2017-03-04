@@ -69,6 +69,8 @@ var KittnGenerator = yeoman.Base.extend({
       craft_wget = false
     })
 
+    var gitInfo = {}
+
     // check git info
     commandExists('git')
       .then(function(command) {
@@ -790,7 +792,7 @@ var KittnGenerator = yeoman.Base.extend({
         const done = _self.async()
         _self.spawnCommand('yarn').on('close', done);
       } else {
-        this.installDependencies({
+        _self.installDependencies({
           bower: false,
           npm  : true
         })
