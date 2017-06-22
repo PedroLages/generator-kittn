@@ -10,11 +10,18 @@
  * @param {string} $format     = Imageformat [uncropped, wide, extrawide, square, rect]
  * @param {bool}   $background = Background Option
  * @param {string} $tag        = Tag for Background Element (default: 'figure')
+ * @param {string} $position   = Optional background position for background images
  */
-function macro_mediaImageSet($image,$classname,$format,$background = false, $tag = 'figure') {
+function macro_mediaImageSet($image,$classname,$format,$background = false, $tag = 'figure', $position = false) {
   $imageset = '';
   $imagepre = '';
+  $backgroundPosition = '';
   $imageformats = ['uncropped', 'wide', 'extrawide', 'square', 'rect'];
+
+  // Generate Background Positon
+  if ($position) {
+    $backgroundPosition = 'background-position: '.$position;
+  }
 
   // Crop Size Array
   $cropsizes = [
@@ -35,6 +42,9 @@ function macro_mediaImageSet($image,$classname,$format,$background = false, $tag
   ];
 
   if ($image) {
+    // Get Mime Type
+    $imageMime = $image['mime_type'];
+
     // Check Imageformat
     if (in_array($format, $imageformats)) {
       // Generate Image Set
@@ -51,9 +61,27 @@ function macro_mediaImageSet($image,$classname,$format,$background = false, $tag
 
       // Output as <img> or Background
       if ($background) {
-        echo '<'.$tag.' class="'.$classname.' lazyload" style="background-image: url('.$imagepre.')" data-sizes="auto" data-bgset="'.$imageset.'"></'.$tag.'>';
+        if ($imageMime == 'image/svg+xml') {
+          // Check if Tag is used otherwise return a string
+          if ($tag != false) {
+            echo '<'.$tag.' class="'.$classname.'" style="background-image: url('.$imagepre.');'.$backgroundPosition.'"></'.$tag.'>';
+          } else {
+            echo 'class="'.$classname.'" style="background-image: url('.$imagepre.');'.$backgroundPosition.'"';
+          }
+        } else {
+          // Check if Tag is used otherwise return a string
+          if ($tag != false) {
+            echo '<'.$tag.' class="'.$classname.' lazyload" style="background-image: url('.$imagepre.');'.$backgroundPosition.'" data-sizes="auto" data-bgset="'.$imageset.'"></'.$tag.'>';
+          } else {
+            echo 'class="'.$classname.' lazyload" style="background-image: url('.$imagepre.');'.$backgroundPosition.'" data-sizes="auto" data-bgset="'.$imageset.'"';
+          }
+        }
       } else {
-        echo '<img data-sizes="auto" src="'.$imagepre.'" data-srcset="'.$imageset.'" class="'.$classname.' lazyload" role="img" alt="'.$image["alt"].'" itemprop="thumbnail">';
+        if ($imageMime == 'image/svg+xml') {
+          echo  '<img src="'.$imagepre.'" class="'.$classname.'" role="img" alt="'.$image["alt"].'" itemprop="thumbnail">';
+        } else {
+          echo  '<img data-sizes="auto" src="'.$imagepre.'" data-srcset="'.$imageset.'" class="'.$classname.' lazyload" role="img" alt="'.$image["alt"].'" itemprop="thumbnail">';
+        }
       }
     } else {
       echo '<p style="color:red">Wrong Image Format!<br> Use the Following: uncropped, wide, extrawide, square or rect </p>';

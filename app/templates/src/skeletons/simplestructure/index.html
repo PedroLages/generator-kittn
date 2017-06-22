@@ -16,6 +16,10 @@
     <meta name="twitter:title" content="<%= projectname %>">
     <meta name="twitter:image:src" content="./assets/system/twitter-og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
+    <!-- Browser Tab Bar Color -->
+    <meta name="theme-color" content="<%= projectthemecolor %>">
+    <meta name="msapplication-navbutton-color" content="<%= projectthemecolor %>">
+    <meta name="apple-mobile-web-app-status-bar-style" content="<%= projectthemecolor %>">
     <!--[if lt IE 9]>
     <script src="./assets/html5shiv.js"></script>
     <![endif]-->
@@ -23,10 +27,6 @@
   <body>
     <h1>Hello World</h1>
     <div id="app"></div>
-    <% if ( projectiecompatible == true ) { %>
-    <!--[if lte IE 9]>
-    <script src="./assets/js/selectivizr.js"></script>
-    <![endif]--><% } %>
     <script src="./assets/js/modernizr.js"></script>
     <script src="./assets/js/conditionizr.js"></script>
     <script src="./assets/js/main.js"></script>

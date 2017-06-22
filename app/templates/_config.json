@@ -12,7 +12,7 @@
     "bitmaps": "dist/assets/img/bitmaps/",
     "vectors": "dist/assets/img/svgfiles/",
     "contentimage": "dist/images/",
-    "webpackjsassets": "assets/js/",<% } if (projectUsage == 'Integrate in Wordpress' ) { %>
+    "webpackjsassets": "assets/",<% } if (projectUsage == 'Integrate in Wordpress' ) { %>
     "dist": "dist/",
     "base": "dist/wp-content/themes/<%= projectname %>/",
     "markup": "dist/wp-content/themes/<%= projectname %>/",
@@ -25,7 +25,7 @@
     "bitmaps": "dist/wp-content/themes/<%= projectname %>/assets/img/bitmaps/",
     "vectors": "dist/wp-content/themes/<%= projectname %>/assets/img/svgfiles/",
     "contentimage": "dist/wp-content/themes/<%= projectname %>/images/",
-    "webpackjsassets": "wp-content/themes/<%= projectname %>/assets/js/",<% } if (projectUsage == 'Integrate in CraftCMS' ) { %>
+    "webpackjsassets": "wp-content/themes/<%= projectname %>/assets/",<% } if (projectUsage == 'Integrate in CraftCMS' ) { %>
     "dist": "dist/",
     "base": "dist/public/",
     "markup": "dist/craft/",
@@ -38,7 +38,7 @@
     "bitmaps": "dist/public/assets/img/bitmaps/",
     "vectors": "dist/public/assets/img/svgfiles/",
     "contentimage": "dist/public/images/",
-    "webpackjsassets": "public/assets/js/",<% } %>
+    "webpackjsassets": "assets/",<% } %>
     "cssimgRoot": "/assets/img/"
   },
   "templatePath": {
@@ -54,21 +54,21 @@
     "baseFontSize": "16px",
     "filename": "<%= projectcssfilename %>",
     "prefix": [
-      "last 2 version",<% if (projectiecompatible == true ) { %>
-      "ie 8",<% } else { %>
-      "ie 9",<% } %>
+      "last 2 version",
+      "ie 9",
       "> 5%"
     ]
-  },
-  "cssabove": {
-    "width": "320",
-    "height": "480",
-    "minify": true,
-    "inline": true,
-    "sources": [
-      "index.html"
-    ]
-  },
+  }<% if (projectcritical == true) { %>,
+    "cssabove": {
+      "width": "1024",
+      "height": "768",
+      "minify": true,
+      "inline": <% if (projectcriticalinline === 'Inline') {%>true<%} else { %>false<% } %>,
+      "sources": [
+        "index.html"
+      ]<% if (projectcriticalinline != 'Inline') {%>,
+      "destFilename": "critical.css"<% } %>
+  }<% } %>,
   "template": {
     "globalTitle": "<%= projectname %>",
     "compiler": <% if ( projectstructure == 'Twig Template' && projectUsage == 'Building HTML Prototypes') { %>true<% } else { %>false<% } %>
@@ -83,8 +83,7 @@
       "srcName": "app.js",
       "distName": "app.js"
     },
-    "jsCopy": [<% if (projectiecompatible == true ) { %>
-      "node_modules/selectivizr/selectivizr.js",<% } %>
+    "jsCopy": [
       "node_modules/lazysizes/plugins/respimg/ls.respimg.js",
       "node_modules/html5shiv/dist/html5shiv.js"
     ],
@@ -96,7 +95,7 @@
       "src/fonts/**"
     ],
     "launch": [
-      {"src": "favicons/**", "dest": "assets/img/system/"},<% if (projectUsage == 'Building HTML Prototypes') { %>
+      {"src": "favicons/**", "dest": "assets/img/system/"}<% if (projectUsage == 'Building HTML Prototypes') { %>,
       {"src": "facebook-og-image.jpg", "dest": "assets/img/system/"},
       {"src": "twitter-og-image.jpg", "dest": "assets/img/system/"},
       {"src": ".htaccess", "dest": ""},
@@ -130,8 +129,7 @@
       "node_modules/conditionizr/detects/firefox.js",
       "node_modules/conditionizr/detects/ie11.js",
       "node_modules/conditionizr/detects/ie10.js",
-      "node_modules/conditionizr/detects/ie9.js"<% if (projectiecompatible == true ) { %>,
-      "node_modules/conditionizr/detects/ie8.js"<% } %>
+      "node_modules/conditionizr/detects/ie9.js"
     ]
   },
   "minify": {

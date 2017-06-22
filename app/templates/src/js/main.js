@@ -50,9 +50,4 @@ lazySizes.init()<% if (projectcraftbp === true || projectwordpressbp === true) {
 initPhotoSwipeFromDOM('.is-photoswipped')
 
 // Activate Progressloader
-progressLoader()
-
-// Detect Windows - needed for Viewport Span
-if (navigator.platform.match(/(Win)/i)) {
-  document.getElementsByTagName('html')[0].className += ' windows '
-}<% } %>
+progressLoader()<% } %>

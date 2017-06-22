@@ -6,15 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="profile" href="http://gmpg.org/xfn/11">
-  <% if ( projectiecompatible == true ) { %>
-  <!--[if lte IE 8]>
-  <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/<%= projectcssfilename %>-ie8.css">
-  <![endif]-->
-  <!--[if gt IE 8]><!-->
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/<%= projectcssfilename %>.css">
-  <!--<![endif]--><% } else { %>
-  <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/<%= projectcssfilename %>.css"><% } %>
   <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/system/favicon.png">
+  <!-- Browser Tab Bar Color -->
+  <meta name="theme-color" content="<%= projectthemecolor %>">
+  <meta name="msapplication-navbutton-color" content="<%= projectthemecolor %>">
+  <meta name="apple-mobile-web-app-status-bar-style" content="<%= projectthemecolor %>">
   <?php wp_head(); ?>
   <!--[if lt IE 9]>
   <script src="<?php bloginfo('template_url'); ?>/assets/js/html5shiv.js"></script>
